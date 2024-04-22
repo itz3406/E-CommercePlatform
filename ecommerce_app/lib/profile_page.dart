@@ -1,15 +1,25 @@
-// reach this page from the nav bar on the homepage
-//user can upload images and information on item
+//users can add username and edit it 
+import 'package:flutter/material.dart';
+
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  TextEditingController _usernameController = TextEditingController();
+  String _username = "";
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +30,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
         elevation: 0.0,
         backgroundColor: Colors.white,
       ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Username:",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            TextField(
+              controller: _usernameController,
+              decoration: InputDecoration(
+                hintText: "Enter your username",
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  _username = _usernameController.text;
+                  _usernameController.text = _username; 
+                });
+               
+              },
+              child: Text("Save"),
+            ),
+            SizedBox(height: 20),
+            Text(
+              "Saved Username: $_username",
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
+
